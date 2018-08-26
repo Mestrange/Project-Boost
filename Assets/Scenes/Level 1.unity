@@ -692,7 +692,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114154163052483936, guid: a5df907937e925f4c9821347dc0a777c, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: a5df907937e925f4c9821347dc0a777c, type: 2}
   m_IsPrefabAsset: 0
 --- !u!4 &858271401 stripped
@@ -972,6 +973,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1552129454960210, guid: a5df907937e925f4c9821347dc0a777c,
     type: 2}
   m_PrefabInternal: {fileID: 817798873}
+--- !u!114 &1301367646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1301367643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e2b449b2eb78bb44a6812cff47b8f5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rcsThrust: 100
+  mainThrust: 100
+  mainEngine: {fileID: 8300000, guid: 2883e38daf4557b46ab4b5cdfff5b36f, type: 3}
+  deathSound: {fileID: 8300000, guid: 196df2f97dc2c65459e56aa65d37bac2, type: 3}
+  newStartSound: {fileID: 8300000, guid: 7f88512a901c8f84194a14b5579c58be, type: 3}
 --- !u!1 &1763940541
 GameObject:
   m_ObjectHideFlags: 0
