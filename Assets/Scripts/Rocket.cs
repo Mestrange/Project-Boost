@@ -13,6 +13,7 @@ public class Rocket : MonoBehaviour {
         Alive, Dying, Transcending
     }
     State state;
+
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 100f;
 
@@ -55,13 +56,15 @@ public class Rocket : MonoBehaviour {
             case "Finish":
                 {
                     state = State.Transcending;
-                    Invoke("LoadNextScene", 1f);
+                    Invoke("LoadNewScene", 2f);
+
+
                     break;
                 }
             default:
                 print("Dead");
                 state = State.Dying;
-                rigidBody.Sleep();
+                
                 Invoke("LoadPreviousScene", 2f);
                 
                 break;
