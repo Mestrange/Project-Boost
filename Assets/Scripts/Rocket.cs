@@ -11,7 +11,10 @@ public class Rocket : MonoBehaviour {
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip newStartSound;
 
-    
+    [SerializeField] ParticleSystem mainEngineParticles;
+    [SerializeField] ParticleSystem deathParticles;
+    [SerializeField] ParticleSystem newStartParticles;
+
     Rigidbody rigidBody;
     AudioSource audioSource;
    
@@ -77,7 +80,7 @@ public class Rocket : MonoBehaviour {
             case "Finish":
                 {
                     StartSuccessSequence();
-
+                    
                     break;
                 }
             default:
@@ -95,6 +98,8 @@ public class Rocket : MonoBehaviour {
     {
         audioSource.Stop();
         PlayNewStartSound();
+        rigidBody.freezeRotation = true;
+        newStartParticles.Play();
         state = State.Transcending;
 
         Invoke("LoadNewScene", 2f);
@@ -104,6 +109,13 @@ public class Rocket : MonoBehaviour {
     {
         audioSource.Stop();
         PlayDeathSound();
+        deathParticles.Play();
+        UnityEngine.Object rocketBody = GameObject.Find("RocketAppearance");
+        UnityEngine.Object rocket = GameObject.Find("Rocket");
+        GameObject.Destroy(rocketBody);
+        rigidBody.Sleep();
+
+        
         state = State.Duying;
 
         Invoke("LoadPreviousScene", 2f);
@@ -152,16 +164,22 @@ public class Rocket : MonoBehaviour {
         //{
         //    StopAnySound();
         //}
-        else audioSource.Stop();
+        else
+        {
+            audioSource.Stop();
+            mainEngineParticles.Stop();
+        }
     }
 
     private void ApplyThrust()
     {
+        
         rigidBody.AddRelativeForce(Vector3.up * mainThrust);
         if (!audioSource.isPlaying)
         {
             audioSource.PlayOneShot(mainEngine);
         }
+        mainEngineParticles.Play();
     }
 
     private void RespondToRotateInput()
