@@ -17,8 +17,11 @@ public class Rocket : MonoBehaviour {
     [SerializeField] ParticleSystem deathParticles;
     [SerializeField] ParticleSystem newStartParticles;
 
+    //Canvas canvas;
     Rigidbody rigidBody;
     AudioSource audioSource;
+
+    bool CollisionAreEnabled = true;
    
     enum State
     {
@@ -29,10 +32,10 @@ public class Rocket : MonoBehaviour {
     
     // Use this for initialization
     void Start () {
-        ;
+        
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-
+        //canvas = GetComponent<Canvas>();
     }
 	
 	// Update is called once per frame
@@ -42,7 +45,18 @@ public class Rocket : MonoBehaviour {
         {
             RespondToThrustInput();
             RespondToRotateInput();
+            if (Debug.isDebugBuild)
+            {
+                RespondToCheats();
+            }
         }
+    }
+
+    private void RespondToCheats()
+    {
+        if (Input.GetKeyDown(KeyCode.L)) LoadNewScene();
+        else if (Input.GetKeyDown(KeyCode.C) & (CollisionAreEnabled == true)) CollisionAreEnabled = false;
+        else if (Input.GetKeyDown(KeyCode.C) & (CollisionAreEnabled == false)) CollisionAreEnabled = true;
     }
 
     void FixedUpdate()
@@ -54,7 +68,7 @@ public class Rocket : MonoBehaviour {
     void OnCollisionEnter(Collision collision)
     {
         
-        if (state != State.Alive)
+        if (state != State.Alive || !CollisionAreEnabled)
         {
             return;
         }
@@ -81,12 +95,23 @@ public class Rocket : MonoBehaviour {
                 }
             case "Finish":
                 {
+
+                    if (SceneManager.GetActiveScene().buildIndex == 1)
+                    {
+                        GameObject canvas = GameObject.Find("Canvas");
+                        canvas.SetActive(true);
+                        LoadPreviousScene();
+                    }
+
+
+
                     StartSuccessSequence();
                     
+
                     break;
                 }
             default:
-                StartDeathSequence();
+                ReloadSequence();
                 break;
         }
     }
@@ -155,7 +180,30 @@ public class Rocket : MonoBehaviour {
         SceneManager.LoadScene(1);
         //SceneLoaded();
     }
-    
+
+    private void ReloadSequence()
+    {
+        audioSource.Stop();
+        PlayDeathSound();
+        deathParticles.Play();
+        UnityEngine.Object rocketBody = GameObject.Find("RocketAppearance");
+        UnityEngine.Object rocket = GameObject.Find("Rocket");
+        GameObject.Destroy(rocketBody);
+        rigidBody.Sleep();
+
+
+        state = State.Duying;
+
+        Invoke("ReloadScene", levelLoadDelay);
+
+        //SceneLoaded();
+    }
+
+    private void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     private void RespondToThrustInput()
     {
         if (Input.GetKey(KeyCode.Space))
