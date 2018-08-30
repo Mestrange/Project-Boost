@@ -32,7 +32,6 @@ public class Rocket : MonoBehaviour {
     
     // Use this for initialization
     void Start () {
-        
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
         //canvas = GetComponent<Canvas>();
@@ -96,12 +95,12 @@ public class Rocket : MonoBehaviour {
             case "Finish":
                 {
 
-                    if (SceneManager.GetActiveScene().buildIndex == 1)
-                    {
-                        GameObject canvas = GameObject.Find("Canvas");
-                        canvas.SetActive(true);
-                        LoadPreviousScene();
-                    }
+                    //if (SceneManager.GetActiveScene().buildIndex == 1)
+                    //{
+                    //    GameObject canvas = GameObject.Find("Canvas");
+                    //    canvas.SetActive(true);
+                    //    LoadPreviousScene();
+                    //}
 
 
 
@@ -177,7 +176,15 @@ public class Rocket : MonoBehaviour {
 
     private void LoadNewScene()
     {
-        SceneManager.LoadScene(1);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int totalNumberOfScenes = SceneManager.sceneCountInBuildSettings - 1;
+        if (currentSceneIndex == totalNumberOfScenes)
+        {
+            SceneManager.LoadScene(0);
+            return;
+        }
+        SceneManager.LoadScene(currentSceneIndex + 1);
+        //SceneManager.LoadScene(1);
         //SceneLoaded();
     }
 
@@ -234,7 +241,7 @@ public class Rocket : MonoBehaviour {
 
     private void RespondToRotateInput()
     {
-        rigidBody.freezeRotation = true;
+        rigidBody.angularVelocity = Vector3.zero;
         float rotationThisFrame = rcsThrust * Time.deltaTime;
 
 
@@ -249,7 +256,6 @@ public class Rocket : MonoBehaviour {
             
             transform.Rotate(-Vector3.forward * rotationThisFrame);
         }
-
-        rigidBody.freezeRotation = false;
+        
     }
 }

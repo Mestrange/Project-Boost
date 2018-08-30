@@ -12,8 +12,9 @@ public class Oscillator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         startingPos = transform.position;
-        period = 6f;
-        movementVector = new Vector3(0, 20, 0);
+        
+       // period = 6f;
+       // movementVector = new Vector3(0, 20, 0);
 
     }
 	
