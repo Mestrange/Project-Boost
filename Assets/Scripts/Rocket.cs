@@ -222,7 +222,7 @@ public class Rocket : MonoBehaviour {
 
     private void RespondToThrustInput()
     {
-        if ((Input.touchCount > 0) && (isRotating == true))
+        if ((Input.touchCount == 1) && (isRotating == true))
         {
             audioSource.Stop();
             mainEngineParticles.Stop();
