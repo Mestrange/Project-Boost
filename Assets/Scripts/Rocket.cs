@@ -19,10 +19,13 @@ public class Rocket : MonoBehaviour {
     [SerializeField] ParticleSystem deathParticles;
     [SerializeField] ParticleSystem newStartParticles;
 
+    [SerializeField] Text countText;
     public float moveSpeed = 8f;
     public Joystick joystick;
     [SerializeField] Button button1;
     //Canvas canvas;
+    int score = 0;
+    GameObject bonus;
     Rigidbody rigidBody;
     AudioSource audioSource;
     bool isRotating = false;
@@ -40,6 +43,7 @@ public class Rocket : MonoBehaviour {
     void Start () {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        bonus = GetComponent<GameObject>();
         //canvas = GetComponent<Canvas>();
     }
 	
@@ -69,26 +73,58 @@ public class Rocket : MonoBehaviour {
         
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Bonus"))
+        {
+            
+            Destroy(other.gameObject);
+            //if (other.gameObject == null)   больше счета чем нужно
+            //{
+            //    score++;
+            //}
+            score++;
+            countText.enabled = true;
+            countText.text = "Счет: " + score;
+            Invoke("SetCountText", 2);
+        }
+    }
+
+    void SetCountText()
     {
         
+        countText.enabled = false;
+    }
+
+    //Обработка столкновений
+    void OnCollisionEnter(Collision collision)
+    {
+
         if (state != State.Alive || !CollisionAreEnabled)
         {
             return;
         }
         switch (collision.gameObject.tag)
         {
+            case "Bonus":
+                {
+
+                    //collision.gameObject.SetActive(false);
+
+
+                    break;
+                }
             case "StartSpot":
                 {
-            //        StopAnySound();
-            //        PlayNewStartSound();
-            //        Invoke("StopAnySound", 2f);
-            //        //e = State.Transcending;
+                    //        StopAnySound();
+                    //        PlayNewStartSound();
+                    //        Invoke("StopAnySound", 2f);
+                    //        //e = State.Transcending;
                     break;
                 }
             case "Friendly":
                 {
-                    
+
                     break;
                 }
             case "Terrain":
@@ -110,7 +146,7 @@ public class Rocket : MonoBehaviour {
 
 
                     StartSuccessSequence();
-                    
+
 
                     break;
                 }
@@ -120,7 +156,7 @@ public class Rocket : MonoBehaviour {
         }
     }
 
-     void StopAnySound()
+    void StopAnySound()
     {
         audioSource.Stop();
     }
