@@ -25,7 +25,7 @@ public class Rocket : MonoBehaviour {
     //Canvas canvas;
     Rigidbody rigidBody;
     AudioSource audioSource;
-
+    bool isRotating = false;
 
     bool CollisionAreEnabled = true;
    
@@ -222,15 +222,12 @@ public class Rocket : MonoBehaviour {
 
     private void RespondToThrustInput()
     {
-        //if (Input.touchCount > 0 )
-        //{
-        //    ApplyThrust();
-        //}
-        //else
-        //{
-        //    audioSource.Stop();
-        //    mainEngineParticles.Stop();
-        //}
+        if ((Input.touchCount > 0) && (isRotating == true))
+        {
+            audioSource.Stop();
+            mainEngineParticles.Stop();
+            return;
+        }
 
 
         if (Input.GetKey(KeyCode.Space) || (Input.touchCount > 0))
@@ -251,6 +248,7 @@ public class Rocket : MonoBehaviour {
     private void ApplyThrust()
     {
         
+
         rigidBody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
         if (!audioSource.isPlaying)
         {
@@ -261,27 +259,33 @@ public class Rocket : MonoBehaviour {
 
     private void RespondToRotateInput()
     {
+        
         Vector3 moveVector = (Vector3.right * joystick.Horizontal + Vector3.forward * joystick.Vertical);
         Debug.Log(moveVector);
        
 
-
+       
 
         rigidBody.angularVelocity = Vector3.zero;
         float rotationThisFrame = rcsThrust * Time.deltaTime;
         ///
         if (moveVector.x > 0.05)
         {
+            isRotating = true;
             transform.Rotate(-Vector3.forward * rotationThisFrame * 0.5f);
+        }
+        else if (moveVector.x < -0.05)
+        {
+            isRotating = true;
+            transform.Rotate(Vector3.forward * rotationThisFrame * 0.5f);
+        }
+        else
+        {
+            isRotating = false;
         }
         ///
 
-        ///
-        if (moveVector.x < -0.05)
-        {
-            transform.Rotate(Vector3.forward * rotationThisFrame * 0.5f);
-        }
-        ///
+        
 
         if (Input.GetKey(KeyCode.A))
         {
