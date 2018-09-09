@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Rocket : MonoBehaviour {
     [SerializeField] float rcsThrust = 100f;
@@ -19,9 +21,11 @@ public class Rocket : MonoBehaviour {
 
     public float moveSpeed = 8f;
     public Joystick joystick;
+    [SerializeField] Button button1;
     //Canvas canvas;
     Rigidbody rigidBody;
     AudioSource audioSource;
+
 
     bool CollisionAreEnabled = true;
    
@@ -214,9 +218,22 @@ public class Rocket : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    
+
     private void RespondToThrustInput()
     {
-        if (Input.GetKey(KeyCode.Space))
+        //if (Input.touchCount > 0 )
+        //{
+        //    ApplyThrust();
+        //}
+        //else
+        //{
+        //    audioSource.Stop();
+        //    mainEngineParticles.Stop();
+        //}
+
+
+        if (Input.GetKey(KeyCode.Space) || (Input.touchCount > 0))
         {
             ApplyThrust();
         }
@@ -253,14 +270,14 @@ public class Rocket : MonoBehaviour {
         rigidBody.angularVelocity = Vector3.zero;
         float rotationThisFrame = rcsThrust * Time.deltaTime;
         ///
-        if (moveVector.x > 0)
+        if (moveVector.x > 0.05)
         {
             transform.Rotate(-Vector3.forward * rotationThisFrame * 0.5f);
         }
         ///
 
         ///
-        if (moveVector.x < 0)
+        if (moveVector.x < -0.05)
         {
             transform.Rotate(Vector3.forward * rotationThisFrame * 0.5f);
         }
