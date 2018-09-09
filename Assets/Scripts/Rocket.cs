@@ -123,6 +123,7 @@ public class Rocket : MonoBehaviour {
     private void StartSuccessSequence()
     {
         audioSource.Stop();
+        mainEngineParticles.Stop();
         PlayNewStartSound();
         rigidBody.freezeRotation = true;
         newStartParticles.Play();
@@ -195,7 +196,8 @@ public class Rocket : MonoBehaviour {
         deathParticles.Play();
         UnityEngine.Object rocketBody = GameObject.Find("RocketAppearance");
         UnityEngine.Object rocket = GameObject.Find("Rocket");
-        GameObject.Destroy(rocketBody);
+        MeshRenderer.Destroy(rocketBody);
+        //GameObject.Destroy(rocketBody);
         rigidBody.Sleep();
 
 

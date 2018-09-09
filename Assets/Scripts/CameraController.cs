@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour {
     private Vector3 offsetY;
     private Vector3 offsetX;
     private Vector3 offset;
+    private Vector3 currentPosition;
     
     // Use this for initialization
     void Start ()
@@ -18,8 +19,13 @@ public class CameraController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        
+        if (player == null)
+        {
+            transform.position = currentPosition;
+            return;
+        }
         transform.position = player.transform.position + offset;
+        currentPosition = transform.position;
         
          
         /*  transform.up = transform.up + offsetY;
