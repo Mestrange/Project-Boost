@@ -17,6 +17,8 @@ public class Rocket : MonoBehaviour {
     [SerializeField] ParticleSystem deathParticles;
     [SerializeField] ParticleSystem newStartParticles;
 
+    public float moveSpeed = 8f;
+    public Joystick joystick;
     //Canvas canvas;
     Rigidbody rigidBody;
     AudioSource audioSource;
@@ -39,7 +41,6 @@ public class Rocket : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
         if (state == State.Alive)
         {
             RespondToThrustInput();
@@ -243,9 +244,27 @@ public class Rocket : MonoBehaviour {
 
     private void RespondToRotateInput()
     {
+        Vector3 moveVector = (Vector3.right * joystick.Horizontal + Vector3.forward * joystick.Vertical);
+        Debug.Log(moveVector);
+       
+
+
+
         rigidBody.angularVelocity = Vector3.zero;
         float rotationThisFrame = rcsThrust * Time.deltaTime;
+        ///
+        if (moveVector.x > 0)
+        {
+            transform.Rotate(-Vector3.forward * rotationThisFrame * 0.5f);
+        }
+        ///
 
+        ///
+        if (moveVector.x < 0)
+        {
+            transform.Rotate(Vector3.forward * rotationThisFrame * 0.5f);
+        }
+        ///
 
         if (Input.GetKey(KeyCode.A))
         {
