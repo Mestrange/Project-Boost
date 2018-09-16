@@ -17,10 +17,15 @@ public class AudioSourceManager : MonoBehaviour {
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+        
         //if(GlobalOptions.isSound()){
     
         //}
     }
 
-    
+    void Update()
+    {
+       // if (Rocket.isGameQuit == true) gameObject.SetActive(false); //Предполагалось, что это выключит фоновую музыку в случае победы
+    }
+
 }

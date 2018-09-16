@@ -10480,7 +10480,7 @@ Prefab:
     - target: {fileID: 114421642259743070, guid: 5fd32d8cb01456a4c870b611e918963d,
         type: 2}
       propertyPath: joystickMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114759956954479662, guid: 5fd32d8cb01456a4c870b611e918963d,
         type: 2}
@@ -10491,6 +10491,41 @@ Prefab:
         type: 2}
       propertyPath: m_AnchoredPosition.y
       value: 66.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114421642259743070, guid: 5fd32d8cb01456a4c870b611e918963d,
+        type: 2}
+      propertyPath: handleLimit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224617590690975168, guid: 5fd32d8cb01456a4c870b611e918963d,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 224150417347470602, guid: 5fd32d8cb01456a4c870b611e918963d,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 224150417347470602, guid: 5fd32d8cb01456a4c870b611e918963d,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.35858428
+      objectReference: {fileID: 0}
+    - target: {fileID: 224150417347470602, guid: 5fd32d8cb01456a4c870b611e918963d,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.378284
+      objectReference: {fileID: 0}
+    - target: {fileID: 224150417347470602, guid: 5fd32d8cb01456a4c870b611e918963d,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 97
+      objectReference: {fileID: 0}
+    - target: {fileID: 224539620288628370, guid: 5fd32d8cb01456a4c870b611e918963d,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd32d8cb01456a4c870b611e918963d, type: 2}
@@ -11246,12 +11281,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e2b449b2eb78bb44a6812cff47b8f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rcsThrust: 200
+  rcsThrust: 2.5
   mainThrust: 1700
   levelLoadDelay: 2
   mainEngine: {fileID: 8300000, guid: 2883e38daf4557b46ab4b5cdfff5b36f, type: 3}
   deathSound: {fileID: 8300000, guid: 196df2f97dc2c65459e56aa65d37bac2, type: 3}
   newStartSound: {fileID: 8300000, guid: 7f88512a901c8f84194a14b5579c58be, type: 3}
+  winSound: {fileID: 8300000, guid: 05d3d964fc10a134a9a5c2bfd0b31774, type: 3}
+  bonucCollectedSound: {fileID: 8300000, guid: db3ff039ac8c8794ba51d5cd4071266a, type: 3}
   mainEngineParticles: {fileID: 38806281}
   deathParticles: {fileID: 1548227200}
   newStartParticles: {fileID: 230764635}
@@ -11300,7 +11337,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2883e38daf4557b46ab4b5cdfff5b36f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.418
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -16341,7 +16378,12 @@ Prefab:
     - target: {fileID: 82512621882694316, guid: c238b477851e50e4ba7633585cfe24b1,
         type: 2}
       propertyPath: m_Volume
-      value: 0.097
+      value: 0.129
+      objectReference: {fileID: 0}
+    - target: {fileID: 82512621882694316, guid: c238b477851e50e4ba7633585cfe24b1,
+        type: 2}
+      propertyPath: m_PlayOnAwake
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c238b477851e50e4ba7633585cfe24b1, type: 2}

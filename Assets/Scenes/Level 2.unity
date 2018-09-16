@@ -1191,7 +1191,7 @@ Prefab:
     - target: {fileID: 114421642259743070, guid: 5fd32d8cb01456a4c870b611e918963d,
         type: 2}
       propertyPath: joystickMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd32d8cb01456a4c870b611e918963d, type: 2}
@@ -1420,6 +1420,21 @@ Prefab:
       propertyPath: countText
       value: 
       objectReference: {fileID: 1124966771}
+    - target: {fileID: 114175391235874290, guid: aa1a93a0ee62fed4f9ff384c99be86c3,
+        type: 2}
+      propertyPath: winSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 05d3d964fc10a134a9a5c2bfd0b31774, type: 3}
+    - target: {fileID: 114175391235874290, guid: aa1a93a0ee62fed4f9ff384c99be86c3,
+        type: 2}
+      propertyPath: bonucCollectedSound
+      value: 
+      objectReference: {fileID: 8300000, guid: db3ff039ac8c8794ba51d5cd4071266a, type: 3}
+    - target: {fileID: 114175391235874290, guid: aa1a93a0ee62fed4f9ff384c99be86c3,
+        type: 2}
+      propertyPath: rcsThrust
+      value: 2.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa1a93a0ee62fed4f9ff384c99be86c3, type: 2}
   m_IsPrefabAsset: 0

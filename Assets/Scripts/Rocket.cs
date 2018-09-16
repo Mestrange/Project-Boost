@@ -14,6 +14,8 @@ public class Rocket : MonoBehaviour {
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip newStartSound;
+    [SerializeField] AudioClip winSound;
+    [SerializeField] AudioClip bonucCollectedSound;
 
     [SerializeField] ParticleSystem mainEngineParticles;
     [SerializeField] ParticleSystem deathParticles;
@@ -24,6 +26,7 @@ public class Rocket : MonoBehaviour {
     public Joystick joystick;
     [SerializeField] Button button1;
     //Canvas canvas;
+    public static bool isGameQuit = false; //Обозначает, что игра должна завершиться
     int score = 0;
     GameObject bonus;
     Rigidbody rigidBody;
@@ -83,11 +86,18 @@ public class Rocket : MonoBehaviour {
             //{
             //    score++;
             //}
+            
             score++;
+            playBonusCollectedSound(); //toDo работает только когда ревет звук двигателя
             countText.enabled = true;
             countText.text = "Счет: " + score;
             Invoke("SetCountText", 2);
         }
+    }
+
+    void playBonusCollectedSound()
+    {
+        audioSource.PlayOneShot(bonucCollectedSound);
     }
 
     void SetCountText()
@@ -162,13 +172,33 @@ public class Rocket : MonoBehaviour {
     {
         audioSource.Stop();
         mainEngineParticles.Stop();
-        PlayNewStartSound();
+        
         rigidBody.freezeRotation = true;
         newStartParticles.Play();
         state = State.Transcending;
-        countText.enabled = true;
-        countText.text = "Уровень пройден!";
-        Invoke("LoadNewScene", levelLoadDelay);
+        if (SceneManager.GetActiveScene().buildIndex == (SceneManager.sceneCountInBuildSettings - 1))
+        {
+            isGameQuit = true;
+            PlayWinSound();
+
+            Invoke("GameQuit",5);
+            Invoke("LoadNewScene", 7);
+        }
+        else
+        {
+            Debug.Log(SceneManager.GetActiveScene().buildIndex);
+            PlayNewStartSound();
+            countText.enabled = true;
+            countText.text = "Уровень пройден!";
+            Invoke("LoadNewScene", levelLoadDelay);
+
+        }
+       
+    }
+
+    private void GameQuit()
+    {
+        Application.Quit();
     }
 
     private void StartDeathSequence()
@@ -191,6 +221,11 @@ public class Rocket : MonoBehaviour {
     {
         //audioSource.Stop();
         audioSource.PlayOneShot(newStartSound);
+    }
+
+    void PlayWinSound()
+    {
+        audioSource.PlayOneShot(winSound);
     }
 
     void PlayNewStartSound()
@@ -301,36 +336,19 @@ public class Rocket : MonoBehaviour {
 
         rigidBody.angularVelocity = Vector3.zero;
         float rotationThisFrame = rcsThrust * Time.deltaTime;
-        if (moveVector.z > 0)
+        if (moveVector.z > 0 || moveVector.z < 0)
         {
             isRotating = true;
-            transform.rotation = Quaternion.Euler(0, 0, -joystick.Direction.x * rcsThrust);
-            
+            //transform.rotation = Quaternion.Euler(0, 0, -joystick.Direction.y * rcsThrust );
+
+            Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, joystick.Direction);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rcsThrust * Time.deltaTime);
         }
-        if (moveVector.z < 0)
+        else
         {
-
-            isRotating = true;
-            transform.rotation = Quaternion.Euler(0, 0, 180 + joystick.Direction.x * rcsThrust);
+            isRotating = false;
         }
-
-
-            ///Разкоментировать
-            //        if (moveVector.x > 0.05)
-            //{
-            //    isRotating = true;
-            //    transform.Rotate(-Vector3.forward * rotationThisFrame * 0.5f);
-            //}
-            //else if (moveVector.x < -0.05)
-            //{
-            //    isRotating = true;
-            //    transform.Rotate(Vector3.forward * rotationThisFrame * 0.5f);
-            //}
-            //else
-            //{
-            //    isRotating = false;
-            //}
-            /////
+       
 
 
 
