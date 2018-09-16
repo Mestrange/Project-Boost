@@ -1183,6 +1183,16 @@ Prefab:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 224714724442894536, guid: 5fd32d8cb01456a4c870b611e918963d,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 59.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114421642259743070, guid: 5fd32d8cb01456a4c870b611e918963d,
+        type: 2}
+      propertyPath: joystickMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd32d8cb01456a4c870b611e918963d, type: 2}
   m_IsPrefabAsset: 0
@@ -1291,7 +1301,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4552096877254590, guid: 27625e58259c52a4dbcd5d88c5d525dc, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.1063335
+      value: 1.163
       objectReference: {fileID: 0}
     - target: {fileID: 4552096877254590, guid: 27625e58259c52a4dbcd5d88c5d525dc, type: 2}
       propertyPath: m_LocalPosition.z

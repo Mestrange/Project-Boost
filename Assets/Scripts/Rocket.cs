@@ -79,7 +79,7 @@ public class Rocket : MonoBehaviour {
         {
             
             Destroy(other.gameObject);
-            //if (other.gameObject == null)   больше счета чем нужно
+            //if (other.gameObject == null)    ToDo больше счета чем нужно
             //{
             //    score++;
             //}
@@ -129,8 +129,7 @@ public class Rocket : MonoBehaviour {
                 }
             case "Terrain":
                 {
-                    StartDeathSequence();
-
+                    ReloadSequence();
                     break;
                 }
             case "Finish":
@@ -142,8 +141,6 @@ public class Rocket : MonoBehaviour {
                     //    canvas.SetActive(true);
                     //    LoadPreviousScene();
                     //}
-
-
 
                     StartSuccessSequence();
 
@@ -169,7 +166,8 @@ public class Rocket : MonoBehaviour {
         rigidBody.freezeRotation = true;
         newStartParticles.Play();
         state = State.Transcending;
-
+        countText.enabled = true;
+        countText.text = "Уровень пройден!";
         Invoke("LoadNewScene", levelLoadDelay);
     }
 
@@ -298,32 +296,45 @@ public class Rocket : MonoBehaviour {
         
         Vector3 moveVector = (Vector3.right * joystick.Horizontal + Vector3.forward * joystick.Vertical);
         Debug.Log(moveVector);
-       
 
-       
+        Vector3 joystickDirection = new Vector3(0,0, joystick.Direction.x);
 
         rigidBody.angularVelocity = Vector3.zero;
         float rotationThisFrame = rcsThrust * Time.deltaTime;
-        ///
-        if (moveVector.x > 0.05)
+        if (moveVector.z > 0)
         {
             isRotating = true;
-            transform.Rotate(-Vector3.forward * rotationThisFrame * 0.5f);
+            transform.rotation = Quaternion.Euler(0, 0, -joystick.Direction.x * rcsThrust);
+            
         }
-        else if (moveVector.x < -0.05)
+        if (moveVector.z < 0)
         {
+
             isRotating = true;
-            transform.Rotate(Vector3.forward * rotationThisFrame * 0.5f);
+            transform.rotation = Quaternion.Euler(0, 0, 180 + joystick.Direction.x * rcsThrust);
         }
-        else
-        {
-            isRotating = false;
-        }
-        ///
 
-        
 
-        if (Input.GetKey(KeyCode.A))
+            ///Разкоментировать
+            //        if (moveVector.x > 0.05)
+            //{
+            //    isRotating = true;
+            //    transform.Rotate(-Vector3.forward * rotationThisFrame * 0.5f);
+            //}
+            //else if (moveVector.x < -0.05)
+            //{
+            //    isRotating = true;
+            //    transform.Rotate(Vector3.forward * rotationThisFrame * 0.5f);
+            //}
+            //else
+            //{
+            //    isRotating = false;
+            //}
+            /////
+
+
+
+            if (Input.GetKey(KeyCode.A))
         {
             
             transform.Rotate(Vector3.forward * rotationThisFrame);
