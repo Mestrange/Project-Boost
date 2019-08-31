@@ -308,7 +308,7 @@ public class Rocket : MonoBehaviour {
         //    StopAnySound();
         //}
         else
-        {
+         {
             audioSource.Stop();
             mainEngineParticles.Stop();
         }
