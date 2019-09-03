@@ -28,15 +28,26 @@ public class ObstacleController : Asteroid
     void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.tag);
-        if (other.gameObject.tag == "Terrain" || other.gameObject.tag == "PlayerLaser" || other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "PlayerLaser" || other.gameObject.tag == "Player")
         {
-            
-           
-            deathParticles.Play();
-            Destroy(gameObject);
+            StartDeathSequence();
 
         }
         
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Terrain")
+        {
+            StartDeathSequence();
+
+        }
+    }
+
+    private void StartDeathSequence()
+    {
+        deathParticles.Play();
+        Destroy(gameObject);
+    }
 }

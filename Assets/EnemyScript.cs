@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyScript : MonoBehaviour
 {
@@ -34,7 +35,9 @@ public class EnemyScript : MonoBehaviour
     void Start()
     {
         Invoke("GenerateEnemy", 1f);
-        Invoke("GetStartPosition", 2f);
+        Invoke("GetStartPosition", 1f);
+       
+       
     }
 
     // Update is called once per frame
@@ -76,19 +79,18 @@ public class EnemyScript : MonoBehaviour
     {
         rigidBodyEnemy.useGravity = false;
         rigidBodyEnemy.constraints = RigidbodyConstraints.FreezePositionY;
-        startingPos = transform.position;
+        var restartPosition = transform.position;
+        startingPos = new Vector3(-62.2f, 42.5f, -0.299947f);
     }
 
 
     private void StartMoving()
     {
-        
+       
         if (period <= Mathf.Epsilon) { return; }
         float cycles = Time.time / period;
         const float tau = Mathf.PI * 2;
         float rawSinWave = Mathf.Sin(cycles * tau);
-
-
         movementFactor = rawSinWave / 2f + 0.5f;
         Vector3 offset = movementVector * movementFactor;
         transform.position = startingPos + offset;

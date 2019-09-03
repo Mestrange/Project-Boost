@@ -57,7 +57,8 @@ public class RocketAsteroid : MonoBehaviour {
         bonus = GetComponent<GameObject>();
         //canvas = GetComponent<Canvas>();
         healthText.text = Health + "hp";
-
+        Instantiate(Enemy);
+        
 
     }
 
@@ -231,6 +232,7 @@ public class RocketAsteroid : MonoBehaviour {
 
     private void StartDeathSequence()
     {
+        
         audioSource.Stop();
         PlayDeathSound();
         deathParticles.Play();
@@ -240,6 +242,7 @@ public class RocketAsteroid : MonoBehaviour {
         rigidBody.Sleep();
         state = State.Duying;
         Invoke("LoadPreviousScene", levelLoadDelay);
+        
     }
 
     void SceneLoaded()
@@ -300,7 +303,7 @@ public class RocketAsteroid : MonoBehaviour {
 
 
         state = State.Duying;
-
+        
         Invoke("ReloadScene", levelLoadDelay);
     }
 
