@@ -8,6 +8,12 @@ TagManager:
   - Terrain
   - StartSpot
   - Bonus
+  - Asteroid1
+  - PlayerLaser
+  - Asteroid2
+  - Enemy
+  - EnemyLaser
+  - Enemy Laser
   layers:
   - Default
   - TransparentFX
